@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coinone.NET", "Coinone.NET\Coinone.NET.csproj", "{236D3A0B-36B6-48C6-A8E4-C0A47152C632}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coinone.NET.Test", "Coinone.NET.Test\Coinone.NET.Test.csproj", "{4EA12D5C-B52C-40A3-A651-C3704E034496}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{EF9B862C-B96E-414E-8AF2-9717161374D7}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{236D3A0B-36B6-48C6-A8E4-C0A47152C632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236D3A0B-36B6-48C6-A8E4-C0A47152C632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236D3A0B-36B6-48C6-A8E4-C0A47152C632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236D3A0B-36B6-48C6-A8E4-C0A47152C632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EA12D5C-B52C-40A3-A651-C3704E034496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EA12D5C-B52C-40A3-A651-C3704E034496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EA12D5C-B52C-40A3-A651-C3704E034496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EA12D5C-B52C-40A3-A651-C3704E034496}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC29D9DD-D274-482A-AB1E-4FC9C1B4FEC7}
+	EndGlobalSection
+EndGlobal
