@@ -1,4 +1,4 @@
 # Coinone.NET
-.NET Framework¿ë ÄÚÀÎ¿ø API
+.NET Frameworkìš© ì½”ì¸ì› API
 
-°³¹ßÁß ¤µ¤¡
+ê°œë°œì¤‘ ã……ã„±
