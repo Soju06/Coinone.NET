@@ -32,5 +32,36 @@ namespace Soju06 {
         }
 
         public static Uri Uri(this string s) => new Uri(s);
+
+        public static T[] ToTArray<T>(this IEnumerable<T> s) where T : IEnumerable<T> {
+            var w = new List<T>();
+            w.AddRange(s);
+            return w.ToArray();
+        }
+
+        public static List<T> ToTList<T>(this IEnumerable<T> s) where T : IEnumerable<T> {
+            var w = new List<T>();
+            w.AddRange(s);
+            return w;
+        }
+
+        public static TList ToOList<T, TList>(this IEnumerable<T> s) 
+                where TList : IList<T>, new() {
+            var list = new TList();
+            foreach (var item in s) list.Add(item); 
+            return list;
+        }
+
+        public static TList ToOList<T, TList>(this IEnumerable<T> s, TList list)
+                where TList : IList<T> {
+            foreach (var item in s) list.Add(item);
+            return list;
+        }
+
+        public static T New<T>(this Type type) =>
+            (T)Activator.CreateInstance(type);
+
+        public static T New<T>(this Type type, params object[] obs) =>
+            (T)Activator.CreateInstance(type, obs);
     }
 }

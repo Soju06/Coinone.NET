@@ -1,5 +1,6 @@
 ﻿using CoinoneNET.Networking.Request;
 using Soju06;
+using Soju06.Task;
 using Soju06.Web.Utility;
 using System;
 using System.Threading;
@@ -38,7 +39,7 @@ namespace CoinoneNET.Networking {
             while (!token.IsCancellationRequested) {
                 try {
                     if (RefreshTime.IsTimeout && !RequestLimitManager.IsLimitExceeded) {
-                        RequestLimitManager.CountUp();
+                        await RequestLimitManager.CountUpAsync(token);
                         RefreshTime.Object = await GetTime(token);
                     }
                     await Task.Delay(1000, token);

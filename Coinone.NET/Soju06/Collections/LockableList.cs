@@ -68,6 +68,15 @@ namespace Soju06.Collections {
 
         protected void Unlock() =>
             IsLocked = false;
+
+        public static implicit operator LockableList<T>(List<T> s) =>
+            new LockableList<T>(s);
+        public static implicit operator LockableList<T>(T[] s) =>
+            new LockableList<T>(s);
+        public static implicit operator List<T>(LockableList<T> s) =>
+            s?.ToList();
+        public static implicit operator T[](LockableList<T> s) =>
+            s?.ToArray();
     }
 
     [Serializable]

@@ -7,7 +7,7 @@ namespace CoinoneNET.Networking.Request {
     /// <summary>
     /// 기본 요청
     /// </summary>
-    public class CoinoneDefaultRequest : CoinoneSerializableRequestBase {
+    public class CoinoneDefaultRequest : CoinoneRequestBase {
         public CoinoneDefaultRequest(SecureString accessToken) {
             AccessToken = accessToken.Copy();
         }

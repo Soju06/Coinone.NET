@@ -1,27 +1,12 @@
 ﻿using Soju06.Web.Json;
 using System;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 
-namespace CoinoneNET.Networking.Request
-{
-    /// <summary>
-    /// 자동 직렬화 가능한 요청 베이스
-    /// </summary>
-    [Obsolete]
-    [DataContract]
-    public abstract class CoinoneRequestBase {
-        /// <summary>
-        /// Unix 시간
-        /// </summary>
-        [DataMember(Name = "nonce")]
-        public long Nonce { get; set; }
-    }
-
+namespace CoinoneNET.Networking.Request {
     /// <summary>
     /// 수동 직렬화 가능한 요청 베이스
     /// </summary>
-    public abstract class CoinoneSerializableRequestBase {
+    public abstract class CoinoneRequestBase {
         /// <summary>
         /// Unix 시간
         /// </summary>

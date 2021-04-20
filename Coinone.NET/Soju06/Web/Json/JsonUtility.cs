@@ -34,7 +34,6 @@ namespace Soju06.Web.Json {
             var doc = XDocument.Load(JsonReaderWriterFactory.CreateJsonReader(Encoding.UTF8.GetBytes(json), XmlDictionaryReaderQuotas.Max));
             var elms = doc.Descendants().Where(d => d.Attribute("type").Value == "null").ToList();
             foreach (var elm in elms) elm.ReplaceWith(new XElement(elm.Name, null, elm.FirstAttribute));
-            Console.WriteLine(doc.ToString());
             return doc;
         }
 
@@ -44,8 +43,10 @@ namespace Soju06.Web.Json {
             return d;
         }
 
-        public static XElement CreateElement(string name, object obj = null, string type = "object") =>
-            new XElement(name, new XAttribute("type", type)) { Value = obj.ToString() };
+        public static XElement CreateElement(string name, object obj = null, string type = "object") {
+            var e = new XElement(name, new XAttribute("type", obj is null ? "null" : type));
+            if (obj is not null) e.Value = obj?.ToString(); return e;
+        }
 
         public static string CreateWriterString(XDocument document) {
             using (var ms = new MemoryStream()) {
@@ -59,10 +60,8 @@ namespace Soju06.Web.Json {
                 foreach (var elm in elms) elm.ReplaceWith(new XElement(elm.Name, 
                     null, elm.FirstAttribute));
                 var r = JsonReaderWriterFactory.CreateJsonWriter(ms);
-                Console.WriteLine(document.ToString());
                 document.WriteTo(r);
                 r.Flush();
-                Console.WriteLine(document.ToString());
                 ms.Position = 0;
                 using (var sr = new StreamReader(ms))
                     return sr.ReadToEnd();

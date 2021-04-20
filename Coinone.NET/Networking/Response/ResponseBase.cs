@@ -4,7 +4,7 @@ using CoinoneNET.Exception;
 
 namespace CoinoneNET.Networking.Response {
     public abstract class CoinoneResponseBase {
-        internal CoinoneResponseBase(XElement element) {
+        public CoinoneResponseBase(XElement element) {
             ErrorMessage = element.Element("errorMsg")?.Value;
             ErrorCodeS = element.Element("errorCode")?.Value;
             ResultS = element.Element("result")?.Value;

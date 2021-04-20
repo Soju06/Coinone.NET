@@ -7,6 +7,9 @@ using Soju06;
 using System.Net.Http;
 
 namespace CoinoneNET.Networking.Request {
+    /// <summary>
+    /// 요청 빌더
+    /// </summary>
     public class CoinoneRequestBuilder {
         /// <summary>
         /// 시간
@@ -15,8 +18,8 @@ namespace CoinoneNET.Networking.Request {
 
         public Uri RequestUri { get; }
 
-        public CoinoneRequestBuilder() {
-            RequestUri = Coinone.APIServerURI.Join("/v2/");
+        internal CoinoneRequestBuilder(CoinoneAPIVersion version) {
+            RequestUri = Coinone.GetApiServerURI(version);
         }
 
         /// <summary>
@@ -25,7 +28,7 @@ namespace CoinoneNET.Networking.Request {
         /// <typeparam name="Request">요청 오브젝트</typeparam>
         /// <param name="request">요청 오브젝트</param>
         /// <returns>Json으로 인코딩된 요청 오브젝트</returns>
-        public string JsonEncodingPayload<Request>(Request request) where Request : CoinoneSerializableRequestBase {
+        public string JsonEncodingPayload<Request>(Request request) where Request : CoinoneRequestBase {
             return JsonUtility.CreateWriterString(request.Serialize());
         }
 
@@ -35,7 +38,7 @@ namespace CoinoneNET.Networking.Request {
         /// <typeparam name="Request">요청 오브젝트</typeparam>
         /// <param name="request">요청 오브젝트</param>
         /// <returns>인코딩된 페이로드</returns>
-        public string EncodingPayload<Request>(Request request) where Request : CoinoneSerializableRequestBase {
+        public string EncodingPayload<Request>(Request request) where Request : CoinoneRequestBase {
             return JsonEncodingPayload(request).Encode().EncodeBase64();
         }
 
@@ -57,7 +60,7 @@ namespace CoinoneNET.Networking.Request {
         /// <param name="encoded_payload">인코딩된 페이로드</param>
         /// <param name="encoded_signature">인코딩된 서명</param>
         /// <returns>요청 메시지</returns>
-        public HttpRequestMessage GenerateRequest(string func, string encoded_payload, string encoded_signature) {
+        public HttpRequestMessage CreateRequest(string func, string encoded_payload, string encoded_signature) {
             var r = new HttpRequestMessage {
                 RequestUri = RequestUri.Join(func),
                 Method = HttpMethod.Post
@@ -67,9 +70,16 @@ namespace CoinoneNET.Networking.Request {
             return r;
         }
 
-
-        public HttpRequestMessage GenerateRequest<Request>(string func, Request request, SecureString secretKey = null) 
-            where Request : CoinoneSerializableRequestBase {
+        /// <summary>
+        /// 요청을 만듭니다
+        /// </summary>
+        /// <typeparam name="Request">요청 오브젝트</typeparam>
+        /// <param name="func">요청 매소드</param>
+        /// <param name="request">요창 오브젝트</param>
+        /// <param name="secretKey">보안 서명</param>
+        /// <returns></returns>
+        public HttpRequestMessage CreateRequest<Request>(string func, Request request, SecureString secretKey = null) 
+            where Request : CoinoneRequestBase {
             var r = new HttpRequestMessage {
                 RequestUri = RequestUri.Join(func),
                 Method = HttpMethod.Post

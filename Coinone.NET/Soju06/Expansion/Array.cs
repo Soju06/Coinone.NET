@@ -20,7 +20,7 @@ namespace Soju06.Expansion {
             } return h;
         }
 
-        public static T OneFilter<T>(this IList<T> list, FilterHandle<T> handle) {
+        public static T OFilter<T>(this IList<T> list, FilterHandle<T> handle) {
             if (list == null) throw new ArgumentNullException("list");
             if (handle == null) throw new ArgumentNullException("handle"); 
             for (int i = 0; i < list.Count; i++) {

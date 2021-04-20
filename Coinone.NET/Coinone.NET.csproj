@@ -46,17 +46,21 @@
   <ItemGroup>
     <Compile Include="Coinone.cs" />
     <Compile Include="Coinone.static.cs" />
+    <Compile Include="Exception\CoinoneNetwork.cs" />
     <Compile Include="Exception\RequestException.cs" />
     <Compile Include="Exception\ResponseException.cs" />
     <Compile Include="Networking\CoinoneTime.cs" />
     <Compile Include="Networking\Request\DefaultRequest.cs" />
     <Compile Include="Networking\Request\RequestBase.cs" />
     <Compile Include="Networking\Request\RequestBuilder.cs" />
+    <Compile Include="Networking\Response\Account\DepositAddressResponse.cs" />
+    <Compile Include="Networking\Response\Account\UserInformationResponse.cs" />
     <Compile Include="Networking\Response\ResponseBase.cs" />
     <Compile Include="Networking\ErrorCode.cs" />
     <Compile Include="Networking\Network.cs" />
     <Compile Include="Networking\Response\Account\BalanceResponse.cs" />
     <Compile Include="Networking\Request\RequestLimitManager.cs" />
+    <Compile Include="Networking\Response\ResponseBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Soju06\API\APIClient.cs" />
     <Compile Include="Soju06\Collections\LockableList.cs" />
@@ -64,6 +68,7 @@
     <Compile Include="Soju06\Expansion\SecureString.cs" />
     <Compile Include="Soju06\ILovePython.cs" />
     <Compile Include="Soju06\RefreshObject.cs" />
+    <Compile Include="Soju06\Task\TaskLock.cs" />
     <Compile Include="Soju06\Web\Http\HttpUtility.cs" />
     <Compile Include="Soju06\Web\Json\JsonUtility.cs" />
     <Compile Include="Soju06\Web\Utility\TimeUtility.cs" />

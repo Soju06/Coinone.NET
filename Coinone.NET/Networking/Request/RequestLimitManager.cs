@@ -1,6 +1,9 @@
 ﻿using CoinoneNET.Exception;
 using Soju06;
+using Soju06.Task;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoinoneNET.Networking.Request {
     /// <summary>
@@ -43,15 +46,15 @@ namespace CoinoneNET.Networking.Request {
             get => Count >= RequestLimit;
         }
 
-        private readonly object CountLock = new();
+        private readonly AsyncLock ResponseRequestLock = new();
 
         /// <summary>
         /// 카운트 추가
         /// 한도 초과시 <c>RequestLimitExceededException</c>예외를 발생시킵니다.
         /// </summary>
         /// <exception cref="RequestLimitExceededException" />
-        internal void CountUp() {
-            lock (CountLock) {
+        internal async Task CountUpAsync(CancellationToken? token = null) {
+            using(await ResponseRequestLock.LockAsync(token)) {
                 ThrowRequestLimitExceeded();
                 RequestCount.CountUp();
                 TotalRequestCount++;
