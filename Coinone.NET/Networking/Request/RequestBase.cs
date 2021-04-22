@@ -1,5 +1,5 @@
 ﻿using Soju06.Web.Json;
-using System;
+using Soju06;
 using System.Xml.Linq;
 
 namespace CoinoneNET.Networking.Request {
@@ -10,8 +10,7 @@ namespace CoinoneNET.Networking.Request {
         /// <summary>
         /// Unix 시간
         /// </summary>
-        public long Nonce { get => ((DateTimeOffset)CoinoneNetwork.CoinoneNowDateTime)
-                .ToUnixTimeSeconds() + NonceTimeLimit; }
+        public long Nonce { get => CoinoneNetwork.CoinoneNowDateTime.ToUnixTimestamp() + NonceTimeLimit; }
 
         /// <summary>
         /// 제한시간

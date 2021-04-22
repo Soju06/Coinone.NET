@@ -1,21 +1,13 @@
 ﻿using CoinoneNET;
 using CoinoneNET.Networking.Request;
+using CoinoneNET.Networking.Request.Order;
 using CoinoneNET.Networking.Response.Account;
-using Soju06;
-using Soju06.API;
+using CoinoneNET.Networking.Response.Order;
 using Soju06.Expansion;
-using Soju06.Web.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
 using System.Security;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace CoinoneNETTest {
     class Program {
@@ -62,6 +54,23 @@ namespace CoinoneNETTest {
                         Console.WriteLine("SecurityLevel {0}", res.UserInformation.SecurityLevel.ToString());
                         foreach (var item in res.UserInformation.FeeRatesI)
                             Console.WriteLine("{0}", item);
+                    }
+                }
+
+                // 가상 계좌 조회, 
+                // 사용자 정보에도 있음
+                {
+                    var res = await coinone.ResponseRequest<CoinoneVirtualAccountResponse,
+                    CoinoneDefaultRequest>("account/virtual_account/", new(accessToken), secretKey);
+                    Console.WriteLine(res);
+                }
+
+                // 체결된 오더 조회
+                {
+                    var res = await coinone.ResponseRequest<CoinoneMyCompleteOrdersResponse,
+                    CoinoneMyOrdersRequest> ("order/complete_orders/", new(accessToken) { Currency = "XRP" }, secretKey);
+                    foreach (var item in res.CompleteOrders) {
+                        Console.WriteLine(item);
                     }
                 }
             }).Wait();

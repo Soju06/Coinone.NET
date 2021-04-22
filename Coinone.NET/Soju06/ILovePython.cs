@@ -63,5 +63,11 @@ namespace Soju06 {
 
         public static T New<T>(this Type type, params object[] obs) =>
             (T)Activator.CreateInstance(type, obs);
+
+        public static bool IsNullOrWhiteSpace(this string s) => string.IsNullOrWhiteSpace(s);
+        public static bool IsNullOrEmpty(this string s) => string.IsNullOrEmpty(s);
+
+        public static long ToUnixTimestamp(this DateTime time) => ((DateTimeOffset)time).ToUnixTimeSeconds();
+        public static DateTime UnixTimestampToDateTime(this long time) => new DateTime(1970, 1, 1).AddSeconds(time);
     }
 }
