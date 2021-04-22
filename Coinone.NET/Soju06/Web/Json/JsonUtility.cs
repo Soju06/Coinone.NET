@@ -63,8 +63,11 @@ namespace Soju06.Web.Json {
                 document.WriteTo(r);
                 r.Flush();
                 ms.Position = 0;
-                using (var sr = new StreamReader(ms))
-                    return sr.ReadToEnd();
+                using (var sr = new StreamReader(ms)) {
+                    var f = sr.ReadToEnd();
+                    Console.WriteLine(f);
+                    return f;
+                }
             }
         }
     }

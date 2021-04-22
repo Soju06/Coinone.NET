@@ -6,8 +6,12 @@ namespace CoinoneNET.Networking.Request.Order {
     /// <summary>
     /// 한도 구매? 제한 구매?
     /// </summary>
-    public class CoinoneLimitBuyRequest : CoinoneDefaultRequest {
-        public CoinoneLimitBuyRequest(SecureString s) : base(s) {
+    public class CoinoneLimitOrderRequest : CoinoneDefaultRequest {
+        public CoinoneLimitOrderRequest() {
+
+        }
+
+        public CoinoneLimitOrderRequest(SecureString s) : base(s) {
 
         }
 
@@ -15,7 +19,7 @@ namespace CoinoneNET.Networking.Request.Order {
             element.Add(JsonUtility.CreateElement("price", Price, "string"));
             element.Add(JsonUtility.CreateElement("qty", Qty, "number"));
             element.Add(JsonUtility.CreateElement("currency", Currency, "string"));
-            element.Add(JsonUtility.CreateElement("is_post_only", IsPostOnly, "string"));
+            element.Add(JsonUtility.CreateElement("is_post_only", IsPostOnly.ToString().ToLower(), "boolean"));
             base.SerializeV(element);
         }
 
@@ -28,7 +32,7 @@ namespace CoinoneNET.Networking.Request.Order {
         /// </summary>
         public decimal Qty { get; set; }
         /// <summary>
-        /// 통화
+        /// 코인 코드
         /// 기본값: BTC
         /// </summary>
         public string Currency { get; set; } = "BTC";

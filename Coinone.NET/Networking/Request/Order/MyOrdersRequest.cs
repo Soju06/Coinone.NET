@@ -4,6 +4,10 @@ using System.Xml.Linq;
 
 namespace CoinoneNET.Networking.Request.Order {
     public class CoinoneMyOrdersRequest : CoinoneDefaultRequest {
+        public CoinoneMyOrdersRequest() {
+
+        }
+
         public CoinoneMyOrdersRequest(SecureString accessToken) : base(accessToken) {
 
         }
@@ -14,7 +18,7 @@ namespace CoinoneNET.Networking.Request.Order {
         }
 
         /// <summary>
-        /// 통화
+        /// 코인 코드
         /// 기본값: BTC
         /// </summary>
         public string Currency { get; set; } = "BTC";

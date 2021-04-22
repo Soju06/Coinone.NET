@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Xml.Linq;
 using CoinoneNET.Exception;
 
@@ -38,11 +39,20 @@ namespace CoinoneNET.Networking.Response {
         }
 
         /// <summary>
+        /// 요청 성공 여부
+        /// </summary>
+        public bool IsSuccess { get => Result == CoinoneResponseResults.Success; }
+
+        /// <summary>
+        /// 에러코드 Done 여부
+        /// </summary>
+        public bool IsDone { get => ErrorCode == CoinoneErrorCodes.Done; }
+
+        /// <summary>
         /// 만약, 오류가 발생하였을 경후 <c></c>
         /// </summary>
         public void ThrowResponseError() {
-            if (Result != CoinoneResponseResults.Success)
-                throw new CoinoneResponseErrorExceptionException($"{ErrorCode} / {ErrorMessage}");
+            if (!IsDone) throw new CoinoneResponseErrorExceptionException($"{ErrorCode} / {ErrorMessage}");
         }
     }
 

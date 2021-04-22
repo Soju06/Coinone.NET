@@ -1,25 +1,44 @@
 ﻿using Soju06;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace CoinoneNET.Networking.Response.Order
-{
+namespace CoinoneNET.Networking.Response.Order {
     /// <summary>
     /// 내 오더 정보
     /// </summary>
-    public class CoinoneMyOrderInformationResponse : CoinoneResponseBase {
-        public CoinoneMyOrderInformationResponse(XElement element) : base(element) {
+    public class CoinoneMyOrderInformationV1Response : CoinoneResponseBase {
+        public CoinoneMyOrderInformationV1Response(XElement element) : base(element) {
             OrderInfo = new(element?.Element("info"));
+            if (MyOrderV1StatusTryParse(element?.Element("status")?.Value, out var r))
+                Status = r;
         }
 
         /// <summary>
         /// 오더 정보
         /// </summary>
         public CoinoneMyOrderInfo OrderInfo { get; }
+
+        /// <summary>
+        /// 오더 상태
+        /// </summary>
+        public CoinoneMyOrderV1Status Status { get; }
+
+        public static string MyOrderV1StatusToString(CoinoneMyOrderV1Status status) => status switch {
+            CoinoneMyOrderV1Status.Live => "live",
+            CoinoneMyOrderV1Status.Failed => "failed",
+            CoinoneMyOrderV1Status.PartiallyFilled => "partially_filled",
+            _ => null
+        };
+
+        public static bool MyOrderV1StatusTryParse(string s, out CoinoneMyOrderV1Status status) =>
+            (status = s switch {
+                "live" => CoinoneMyOrderV1Status.Live,
+                "failed" => CoinoneMyOrderV1Status.Failed,
+                "partially_filled" => CoinoneMyOrderV1Status.PartiallyFilled,
+                _ => CoinoneMyOrderV1Status.None
+            }) != CoinoneMyOrderV1Status.None;
+
+        public override string ToString() => $"{Status} | {OrderInfo}";
     }
 
     /// <summary>
@@ -42,12 +61,12 @@ namespace CoinoneNET.Networking.Response.Order
                 Fee = y;
             if (decimal.TryParse(RemainQtyS = element.Element("remainQty")?.Value, out var g))
                 RemainQty = g;
-            if (OrderTypeTryParse(TypeS = element.Element("ask")?.Value, out var f))
+            if (OrderTypeTryParse(TypeS = element.Element("type")?.Value, out var f))
                 Type = f;
         }
 
         /// <summary>
-        /// 통화
+        /// 코인 코드
         /// 기본값: BTC
         /// </summary>
         public string Currency { get; set; } = "BTC";
@@ -112,27 +131,52 @@ namespace CoinoneNET.Networking.Response.Order
         /// </summary>
         public string FeeS { get; }
 
-        public static bool OrderTypeTryParse(string s, out CoinoneOrderTypes type) { //이거 뭔가 문제 있음
-            type = 0;
-            if (s is null) return false;
-            s = s.ToLower();
-            if (s == "ask") type = CoinoneOrderTypes.Sell;
-            else if (s == "bid") type = CoinoneOrderTypes.Buy;
-            else return false;
-            return true;
-        }
+        public static bool OrderTypeTryParse(string s, out CoinoneOrderTypes type) =>
+            (type = s?.ToLower() switch {
+                "ask" => CoinoneOrderTypes.Sell,
+                "bid" => CoinoneOrderTypes.Buy,
+                _ => CoinoneOrderTypes.None
+            }) != CoinoneOrderTypes.None;
 
         public static string OrderTypeToString(CoinoneOrderTypes type) => type switch {
             CoinoneOrderTypes.Sell => "ask",
             CoinoneOrderTypes.Buy => "bid",
-            _ => ""
+            _ => null
         };
+
+        public override string ToString() => $"{Type} {Price}/{Qty} Remain Qty {RemainQty} Fee {Fee}";
+    }
+
+    /// <summary>
+    /// 내 주문 상태
+    /// </summary>
+    public enum CoinoneMyOrderV1Status {
+        /// <summary>
+        /// 알수 없는
+        /// </summary>
+        None,
+        /// <summary>
+        /// 살아있는
+        /// </summary>
+        Live,
+        /// <summary>
+        /// 실패
+        /// </summary>
+        Failed,
+        /// <summary>
+        /// 일부 체결됨?
+        /// </summary>
+        PartiallyFilled
     }
 
     /// <summary>
     /// 주문 타입
     /// </summary>
     public enum CoinoneOrderTypes {
+        /// <summary>
+        /// 알수 없는
+        /// </summary>
+        None,
         /// <summary>
         /// 매도
         /// </summary>

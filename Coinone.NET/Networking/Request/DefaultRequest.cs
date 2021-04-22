@@ -8,13 +8,17 @@ namespace CoinoneNET.Networking.Request {
     /// 기본 요청
     /// </summary>
     public class CoinoneDefaultRequest : CoinoneRequestBase {
+        public CoinoneDefaultRequest() {
+
+        }
+
         public CoinoneDefaultRequest(SecureString accessToken) {
             AccessToken = accessToken.Copy();
         }
 
         protected sealed override void SerializeObject(ref XElement element) {
             SerializeV(element);
-            element.Add(JsonUtility.CreateElement("access_token", AccessToken.GetStringAndDispose(), "string"));
+            element.Add(JsonUtility.CreateElement("access_token", AccessToken?.GetStringAndDispose(), "string"));
         }
 
         protected virtual void SerializeV(XElement element) {
@@ -29,6 +33,6 @@ namespace CoinoneNET.Networking.Request {
         /// <summary>
         /// .NET Framework에서만 보안 문자열이 적용됩니다.
         /// </summary>
-        private SecureString AccessToken { get; }
+        internal SecureString AccessToken { get; set; }
     }
 }

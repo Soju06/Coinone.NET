@@ -7,6 +7,10 @@ namespace CoinoneNET.Networking.Request.Order {
     /// 주문 취소
     /// </summary>
     public class CoinoneCancelOrderRequest : CoinoneDefaultRequest {
+        public CoinoneCancelOrderRequest() {
+
+        }
+
         public CoinoneCancelOrderRequest(SecureString s) : base(s) {
 
         }
@@ -37,7 +41,7 @@ namespace CoinoneNET.Networking.Request.Order {
         /// </summary>
         public uint IsAsk { get; set; }
         /// <summary>
-        /// 통화
+        /// 코인 코드
         /// 기본값: BTC
         /// </summary>
         public string Currency { get; set; } = "BTC";

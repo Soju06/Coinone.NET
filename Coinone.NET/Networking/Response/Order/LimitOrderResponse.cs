@@ -16,5 +16,7 @@ namespace CoinoneNET.Networking.Response.Order {
         /// 주문 ID
         /// </summary>
         public string OrderId { get; set; }
+
+        public override string ToString() => $"{OrderId}";
     }
 }
