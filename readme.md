@@ -63,26 +63,3 @@
   coinone.RegisterSecurityAccessToken(accessToken);
   coinone.RegisterSecuritySecretKey(secretKey);
   ```
-
-  키나 토큰을 등록할때 SecureString를 사용하게 되는데, unsafe char가 필요하지만
-
-  Soju06.Expansion을 using하면 
-
-  ```csharp
-  using Soju06.Expansion;
-  //
-  SecureString secretKey = new(), accessToken = new();
-  accessToken.AppendString("");
-  secretKey.AppendString("");
-  
-  var coinone = new Coinone();
-  coinone.RegisterSecurityAccessToken(accessToken);
-  coinone.RegisterSecuritySecretKey(secretKey);
-  ```
-
-  간단하게 구현할 수 있습니다.
-
-## 경고
-
-SecureString class는 .NET Framework에서만 암호화됩니다.
-.NET 기반 런타임에서 보안문자열을 사용하려면.. 그냥 직접 수정하세요 ㅋ
